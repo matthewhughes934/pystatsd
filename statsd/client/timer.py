@@ -9,15 +9,14 @@ from typing import TYPE_CHECKING, TypeVar
 if TYPE_CHECKING:
     from .base import StatsClientBase
 
-    R = TypeVar("R")
-    C = TypeVar("C", bound=StatsClientBase)
+    ReturnT = TypeVar("ReturnT")
 
 
 def safe_wraps(
-    wrapper: Callable[..., R] | functools.partial[R],
+    wrapper: Callable[..., ReturnT] | functools.partial[ReturnT],
     *args: Sequence[str],
     **kwargs: Sequence[str],
-) -> Callable[..., Callable[..., R]]:
+) -> Callable[..., Callable[..., ReturnT]]:
     """Safely wraps partial functions."""
     while isinstance(wrapper, functools.partial):
         wrapper = wrapper.func
@@ -27,7 +26,7 @@ def safe_wraps(
 class Timer:
     """A context manager/decorator for statsd.timing()."""
 
-    def __init__(self, client: C, stat: str, rate: float = 1):
+    def __init__(self, client: StatsClientBase, stat: str, rate: float = 1):
         self.client = client
         self.stat = stat
         self.rate = rate
@@ -35,11 +34,11 @@ class Timer:
         self._sent = False
         self._start_time: float | None = None
 
-    def __call__(self, f: Callable[..., R]) -> Callable[..., R]:
+    def __call__(self, f: Callable[..., ReturnT]) -> Callable[..., ReturnT]:
         """Thread-safe timing function decorator."""
 
         @safe_wraps(f)
-        def _wrapped(*args: object, **kwargs: object) -> R:
+        def _wrapped(*args: object, **kwargs: object) -> ReturnT:
             start_time = perf_counter()
             try:
                 return f(*args, **kwargs)
