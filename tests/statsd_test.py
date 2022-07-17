@@ -964,7 +964,7 @@ def test_tcp_timeout(mock_socket):
     test_timeout = 321
     cl = TCPStatsClient(timeout=test_timeout)
     cl.incr("foo")
-    cl._sock.settimeout.assert_called_once_with(test_timeout)
+    cl._sock.settimeout.assert_called_once_with(test_timeout)  # type: ignore[union-attr]
 
 
 @mock.patch.object(socket, "socket")
@@ -973,7 +973,7 @@ def test_unix_socket_timeout(mock_socket):
     test_timeout = 321
     cl = UnixSocketStatsClient(UNIX_SOCKET, timeout=test_timeout)
     cl.incr("foo")
-    cl._sock.settimeout.assert_called_once_with(test_timeout)
+    cl._sock.settimeout.assert_called_once_with(test_timeout)  # type: ignore[union-attr]
 
 
 @mock.patch.object(socket, "socket")
