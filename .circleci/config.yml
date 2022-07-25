@@ -69,10 +69,22 @@ jobs:
       - checkout
       - *attach_virtualenv
       - *load_virtualenv
-      - run: flake8 statsd
+      - run: flake8 statsd tests
       - run: black --check --diff statsd tests
       - run: isort --check-only --diff statsd tests
       - run: mypy --show-error-codes statsd tests
+
+  build-docs:
+    docker:
+      - image: cimg/python:3.10
+    steps:
+      - checkout
+      - *attach_virtualenv
+      - *load_virtualenv
+      - run:
+          name: Build docs
+          working_directory: ./docs
+          command: make html SPHINXOPTS='-W --keep-going'
 
 workflows:
   test-pythons:
@@ -88,5 +100,8 @@ workflows:
           requires:
             - build
       - lint:
+          requires:
+            - build
+      - build-docs:
           requires:
             - build
