@@ -84,6 +84,7 @@ Contents
    unix_socket.rst
    reference.rst
    contributing.rst
+   tags.rst
 
 
 Indices and tables
