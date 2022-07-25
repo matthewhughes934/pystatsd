@@ -69,7 +69,7 @@ jobs:
       - checkout
       - *attach_virtualenv
       - *load_virtualenv
-      - run: flake8 statsd
+      - run: flake8 statsd tests
       - run: black --check --diff statsd tests
       - run: isort --check-only --diff statsd tests
       - run: mypy --show-error-codes statsd tests
