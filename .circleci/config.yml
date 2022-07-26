@@ -85,6 +85,10 @@ jobs:
           name: Build docs
           working_directory: ./docs
           command: make html SPHINXOPTS='-W --keep-going'
+      - persist_to_workspace:
+          root: ./docs
+          paths:
+            - _build
 
 workflows:
   test-pythons:
