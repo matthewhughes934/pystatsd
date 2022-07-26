@@ -1,55 +1,96 @@
-
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
-    <title>Using Timers &#8212; Python StatsD 3.3.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
-    
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using Timers &mdash; Python StatsD 3.3.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Pipelines" href="pipeline.html" />
     <link rel="prev" title="Data Types" href="types.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="pipeline.html" title="Pipelines"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="types.html" title="Data Types"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Python StatsD 3.3.0 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Using Timers</a></li> 
-      </ul>
-    </div>  
+</head>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Python StatsD
+          </a>
+              <div class="version">
+                3.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="configure.html">Configuring Statsd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">Data Types</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using Timers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#calling-timing-manually">Calling <code class="docutils literal notranslate"><span class="pre">timing</span></code> manually</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-a-context-manager">Using a context manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-a-decorator">Using a decorator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-a-timer-object-directly">Using a Timer object directly</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline.html">Pipelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tcp.html">TCPStatsClient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unix_socket.html">UnixSocketStatsClient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tags.html">Unsupported: Tagging Metrics</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Python StatsD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Using Timers</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/timing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   <section id="using-timers">
-<span id="timing-chapter"></span><h1>Using Timers<a class="headerlink" href="#using-timers" title="Permalink to this headline">¶</a></h1>
+<span id="timing-chapter"></span><h1>Using Timers<a class="headerlink" href="#using-timers" title="Permalink to this heading"></a></h1>
 <p><a class="reference internal" href="types.html#timer-type"><span class="std std-ref">Timers</span></a> are an incredibly powerful tool for tracking
 application performance. Statsd provides a number of ways to use them to
 instrument your code.</p>
 <p>There are four ways to use timers.</p>
 <section id="calling-timing-manually">
-<h2>Calling <code class="docutils literal notranslate"><span class="pre">timing</span></code> manually<a class="headerlink" href="#calling-timing-manually" title="Permalink to this headline">¶</a></h2>
+<h2>Calling <code class="docutils literal notranslate"><span class="pre">timing</span></code> manually<a class="headerlink" href="#calling-timing-manually" title="Permalink to this heading"></a></h2>
 <p>The simplest way to use a timer is to record the time yourself and send
 it manually, using the <a class="reference internal" href="reference.html#StatsClient.timing" title="StatsClient.timing"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StatsClient.timing()</span></code></a> method:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
@@ -76,7 +117,7 @@ it manually, using the <a class="reference internal" href="reference.html#StatsC
 </div>
 </section>
 <section id="using-a-context-manager">
-<span id="timer-context-manager"></span><h2>Using a context manager<a class="headerlink" href="#using-a-context-manager" title="Permalink to this headline">¶</a></h2>
+<span id="timer-context-manager"></span><h2>Using a context manager<a class="headerlink" href="#using-a-context-manager" title="Permalink to this heading"></a></h2>
 <p>The <a class="reference internal" href="reference.html#StatsClient.timer" title="StatsClient.timer"><code class="xref py py-meth docutils literal notranslate"><span class="pre">StatsClient.timer()</span></code></a> method will return a <a class="reference internal" href="reference.html#Timer" title="Timer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Timer</span></code></a>
 object that can be used as both a context manager and a thread-safe decorator.</p>
 <p>When used as a context manager, it will automatically report the time taken for
@@ -94,7 +135,7 @@ the inner block:</p>
 </div>
 </section>
 <section id="using-a-decorator">
-<span id="timer-decorator"></span><h2>Using a decorator<a class="headerlink" href="#using-a-decorator" title="Permalink to this headline">¶</a></h2>
+<span id="timer-decorator"></span><h2>Using a decorator<a class="headerlink" href="#using-a-decorator" title="Permalink to this heading"></a></h2>
 <p><a class="reference internal" href="reference.html#Timer" title="Timer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Timer</span></code></a> objects can be used to decorate a method in a thread-safe
 manner.  Every time the decorated function is called, the time it took to
 execute will be sent to the statsd server.</p>
@@ -113,7 +154,7 @@ execute will be sent to the statsd server.</p>
 </div>
 </section>
 <section id="using-a-timer-object-directly">
-<span id="timer-object"></span><h2>Using a Timer object directly<a class="headerlink" href="#using-a-timer-object-directly" title="Permalink to this headline">¶</a></h2>
+<span id="timer-object"></span><h2>Using a Timer object directly<a class="headerlink" href="#using-a-timer-object-directly" title="Permalink to this heading"></a></h2>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.1.</span></p>
 </div>
@@ -170,69 +211,34 @@ pipeline. However, it will <em>not</em> be sent immediately.</p>
 </section>
 
 
-            <div class="clearer"></div>
+           </div>
           </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Using Timers</a><ul>
-<li><a class="reference internal" href="#calling-timing-manually">Calling <code class="docutils literal notranslate"><span class="pre">timing</span></code> manually</a></li>
-<li><a class="reference internal" href="#using-a-context-manager">Using a context manager</a></li>
-<li><a class="reference internal" href="#using-a-decorator">Using a decorator</a></li>
-<li><a class="reference internal" href="#using-a-timer-object-directly">Using a Timer object directly</a></li>
-</ul>
-</li>
-</ul>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="types.html" class="btn btn-neutral float-left" title="Data Types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pipeline.html" class="btn btn-neutral float-right" title="Pipelines" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="types.html"
-                        title="previous chapter">Data Types</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="pipeline.html"
-                        title="next chapter">Pipelines</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/timing.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2015, James Socol.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="pipeline.html" title="Pipelines"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="types.html" title="Data Types"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Python StatsD 3.3.0 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Using Timers</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, James Socol.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
-    </div>
-  </body>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
 </html>

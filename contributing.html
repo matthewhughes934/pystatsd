@@ -1,49 +1,90 @@
-
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
-    <title>Contributing &#8212; Python StatsD 3.3.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
-    
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contributing &mdash; Python StatsD 3.3.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Unsupported: Tagging Metrics" href="tags.html" />
     <link rel="prev" title="API Reference" href="reference.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="tags.html" title="Unsupported: Tagging Metrics"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="reference.html" title="API Reference"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Python StatsD 3.3.0 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Contributing</a></li> 
-      </ul>
-    </div>  
+</head>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Python StatsD
+          </a>
+              <div class="version">
+                3.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="configure.html">Configuring Statsd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="types.html">Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timing.html">Using Timers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline.html">Pipelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tcp.html">TCPStatsClient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unix_socket.html">UnixSocketStatsClient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">API Reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#running-tests">Running Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#writing-tests">Writing Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pep8-and-pyflakes">PEP8 and PyFlakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tags.html">Unsupported: Tagging Metrics</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Python StatsD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Contributing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/contributing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   <section id="contributing">
-<span id="contributing-chapter"></span><h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
+<span id="contributing-chapter"></span><h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this heading"></a></h1>
 <p>I happily accept patches if they make sense for the project and work
 well. If you aren’t sure if I’ll merge a patch upstream, please open an
 <a class="reference external" href="https://github.com/jsocol/pystatsd/issues">issue</a> and describe it.</p>
@@ -59,7 +100,7 @@ really up to you.</p>
 included updates to the <code class="docutils literal notranslate"><span class="pre">CHANGES</span></code> file, but it’s not totally
 necessary.</p>
 <section id="running-tests">
-<h2>Running Tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h2>
+<h2>Running Tests<a class="headerlink" href="#running-tests" title="Permalink to this heading"></a></h2>
 <p>To run the tests, you just need <code class="docutils literal notranslate"><span class="pre">nose</span></code> and <code class="docutils literal notranslate"><span class="pre">mock</span></code>. These can be
 installed with <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkvirtualenv statsd
@@ -75,7 +116,7 @@ $ nosetests
 PyPy3, if they’re available.</p>
 </section>
 <section id="writing-tests">
-<h2>Writing Tests<a class="headerlink" href="#writing-tests" title="Permalink to this headline">¶</a></h2>
+<h2>Writing Tests<a class="headerlink" href="#writing-tests" title="Permalink to this heading"></a></h2>
 <p>New features or bug fixes should include tests that fail without the
 relevant code changes and pass with them.</p>
 <p>For example, if there is a bug in the <code class="docutils literal notranslate"><span class="pre">StatsClient._send</span></code> method, a
@@ -91,7 +132,7 @@ welcome, but they will be squashed with code changes to fix them.</p>
 </div>
 </section>
 <section id="pep8-and-pyflakes">
-<h2>PEP8 and PyFlakes<a class="headerlink" href="#pep8-and-pyflakes" title="Permalink to this headline">¶</a></h2>
+<h2>PEP8 and PyFlakes<a class="headerlink" href="#pep8-and-pyflakes" title="Permalink to this heading"></a></h2>
 <p>The development requirements (<code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>) include the
 <code class="docutils literal notranslate"><span class="pre">flake8</span></code> tool. It is easy to run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ flake8 statsd/
@@ -105,7 +146,7 @@ several violations. That’s fine, don’t worry about it.</p>
 </div>
 </section>
 <section id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
 <p>The documentation lives in the <code class="docutils literal notranslate"><span class="pre">docs/</span></code> directory and is automatically
 built and pushed to <a class="reference external" href="https://statsd.readthedocs.io/">ReadTheDocs</a>.</p>
 <p>If you change or add a feature, and want to update the docs, that would
@@ -117,69 +158,34 @@ heading in an existing chapter.</p>
 </section>
 
 
-            <div class="clearer"></div>
+           </div>
           </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Contributing</a><ul>
-<li><a class="reference internal" href="#running-tests">Running Tests</a></li>
-<li><a class="reference internal" href="#writing-tests">Writing Tests</a></li>
-<li><a class="reference internal" href="#pep8-and-pyflakes">PEP8 and PyFlakes</a></li>
-<li><a class="reference internal" href="#documentation">Documentation</a></li>
-</ul>
-</li>
-</ul>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="reference.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tags.html" class="btn btn-neutral float-right" title="Unsupported: Tagging Metrics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="reference.html"
-                        title="previous chapter">API Reference</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="tags.html"
-                        title="next chapter">Unsupported: Tagging Metrics</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/contributing.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2015, James Socol.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="tags.html" title="Unsupported: Tagging Metrics"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="reference.html" title="API Reference"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Python StatsD 3.3.0 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Contributing</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, James Socol.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
-    </div>
-  </body>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
 </html>

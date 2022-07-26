@@ -1,49 +1,93 @@
-
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
-    <title>Data Types &#8212; Python StatsD 3.3.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
-    
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Types &mdash; Python StatsD 3.3.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Using Timers" href="timing.html" />
     <link rel="prev" title="Configuring Statsd" href="configure.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="timing.html" title="Using Timers"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="configure.html" title="Configuring Statsd"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Python StatsD 3.3.0 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Data Types</a></li> 
-      </ul>
-    </div>  
+</head>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Python StatsD
+          </a>
+              <div class="version">
+                3.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="configure.html">Configuring Statsd</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Data Types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#counters">Counters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#timers">Timers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gauges">Gauges</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gauge-deltas">Gauge Deltas</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sets">Sets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timing.html">Using Timers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline.html">Pipelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tcp.html">TCPStatsClient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unix_socket.html">UnixSocketStatsClient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tags.html">Unsupported: Tagging Metrics</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Python StatsD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Data Types</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/types.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   <section id="data-types">
-<span id="types-chapter"></span><h1>Data Types<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h1>
+<span id="types-chapter"></span><h1>Data Types<a class="headerlink" href="#data-types" title="Permalink to this heading"></a></h1>
 <p>The <a class="reference external" href="https://github.com/etsy/statsd">statsd</a> server supports a number of different data types, and performs
 different aggregation on each of them. The three main types are <em>counters</em>,
 <em>timers</em>, and <em>gauges</em>.</p>
@@ -52,7 +96,7 @@ flushing to <a class="reference external" href="https://graphite.readthedocs.io"
 averaged buckets, so when you’re looking at a graph, for each stat you are
 typically seeing the average value over that minute.</p>
 <section id="counters">
-<span id="counter-type"></span><h2>Counters<a class="headerlink" href="#counters" title="Permalink to this headline">¶</a></h2>
+<span id="counter-type"></span><h2>Counters<a class="headerlink" href="#counters" title="Permalink to this heading"></a></h2>
 <p><em>Counters</em> are the most basic and default type. They are treated as a count of
 a type of event per second, and are, in <a class="reference external" href="https://graphite.readthedocs.io">Graphite</a>, typically averaged over one
 minute. That is, when looking at a graph, you are usually seeing the average
@@ -91,7 +135,7 @@ the same arguments as <code class="docutils literal notranslate"><span class="pr
 </div>
 </section>
 <section id="timers">
-<span id="timer-type"></span><h2>Timers<a class="headerlink" href="#timers" title="Permalink to this headline">¶</a></h2>
+<span id="timer-type"></span><h2>Timers<a class="headerlink" href="#timers" title="Permalink to this heading"></a></h2>
 <p><em>Timers</em> are meant to track how long something took. They are an invaluable
 tool for tracking application performance.</p>
 <p>The statsd server collects all timers under the <code class="docutils literal notranslate"><span class="pre">stats.timers</span></code> prefix, and
@@ -121,7 +165,7 @@ about how much data it averaged).</p>
 timers with Statsd.</p>
 </section>
 <section id="gauges">
-<span id="gauge-type"></span><h2>Gauges<a class="headerlink" href="#gauges" title="Permalink to this headline">¶</a></h2>
+<span id="gauge-type"></span><h2>Gauges<a class="headerlink" href="#gauges" title="Permalink to this heading"></a></h2>
 <p><em>Gauges</em> are a constant data type. They are not subject to averaging, and they
 don’t change unless you change them. That is, once you set a gauge value, it
 will be a flat line on the graph until you change it again.</p>
@@ -134,7 +178,7 @@ system, but a gauge to track how many active WebSocket connections you have.</p>
 sample data back to the statsd server, but use it with care, especially with
 gauges that may not be updated very often.</p>
 <section id="gauge-deltas">
-<h3>Gauge Deltas<a class="headerlink" href="#gauge-deltas" title="Permalink to this headline">¶</a></h3>
+<h3>Gauge Deltas<a class="headerlink" href="#gauge-deltas" title="Permalink to this heading"></a></h3>
 <p>Gauges may be <em>updated</em> (as opposed to <em>set</em>) by setting the <code class="docutils literal notranslate"><span class="pre">delta</span></code> keyword
 argument to <code class="docutils literal notranslate"><span class="pre">True</span></code>. For example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">statsd</span><span class="o">.</span><span class="n">gauge</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="mi">70</span><span class="p">)</span>  <span class="c1"># Set the &#39;foo&#39; gauge to 70.</span>
@@ -149,7 +193,7 @@ argument to <code class="docutils literal notranslate"><span class="pre">True</s
 </section>
 </section>
 <section id="sets">
-<span id="set-type"></span><h2>Sets<a class="headerlink" href="#sets" title="Permalink to this headline">¶</a></h2>
+<span id="set-type"></span><h2>Sets<a class="headerlink" href="#sets" title="Permalink to this heading"></a></h2>
 <p><em>Sets</em> count the number of unique values passed to a key.</p>
 <p>For example, you could count the number of users accessing your system using:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">statsd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="n">userid</span><span class="p">)</span>
@@ -161,72 +205,34 @@ in the same sample period, that userid will only be counted once.</p>
 </section>
 
 
-            <div class="clearer"></div>
+           </div>
           </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Data Types</a><ul>
-<li><a class="reference internal" href="#counters">Counters</a></li>
-<li><a class="reference internal" href="#timers">Timers</a></li>
-<li><a class="reference internal" href="#gauges">Gauges</a><ul>
-<li><a class="reference internal" href="#gauge-deltas">Gauge Deltas</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#sets">Sets</a></li>
-</ul>
-</li>
-</ul>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="configure.html" class="btn btn-neutral float-left" title="Configuring Statsd" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="timing.html" class="btn btn-neutral float-right" title="Using Timers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="configure.html"
-                        title="previous chapter">Configuring Statsd</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="timing.html"
-                        title="next chapter">Using Timers</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/types.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2015, James Socol.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="timing.html" title="Using Timers"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="configure.html" title="Configuring Statsd"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">Python StatsD 3.3.0 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Data Types</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-        &#169; Copyright 2015, James Socol.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
-    </div>
-  </body>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
 </html>
