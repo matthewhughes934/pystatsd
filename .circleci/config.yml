@@ -86,9 +86,35 @@ jobs:
           working_directory: ./docs
           command: make html SPHINXOPTS='-W --keep-going'
       - persist_to_workspace:
-          root: ./docs
+          root: ./docs/_build
           paths:
-            - _build
+            - html
+
+  deploy-gh-pages:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "ce:96:37:12:7d:fc:f8:98:36:18:b0:0d:d3:36:d5:b6"
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Deploy docs
+          command: |
+            git checkout gh-pages
+            # remove all old docs files
+            git rm -r -- ':(exclude).nojekyll'
+            # and replace with the new ones
+            (shopt -s dotglob; cp --recursive /tmp/workspace/html/* .)
+
+            git config user.name "CircleCI"
+            git config user.email "circleci@site.invalid"
+
+            git add .
+            git commit --message "Deploy docs for: $CIRCLE_SHA1"
+            git push origin HEAD
 
 workflows:
   test-pythons:
@@ -109,3 +135,11 @@ workflows:
       - build-docs:
           requires:
             - build
+      - deploy-gh-pages:
+          requires:
+            - build-docs
+          filters:
+            branches:
+              only:
+                - master
+
