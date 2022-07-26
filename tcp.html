@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>TCPStatsClient &#8212; Python StatsD 3.3.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="UnixSocketStatsClient" href="unix_socket.html" />
+    <link rel="prev" title="Pipelines" href="pipeline.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="unix_socket.html" title="UnixSocketStatsClient"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pipeline.html" title="Pipelines"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Python StatsD 3.3.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">TCPStatsClient</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="tcpstatsclient">
+<span id="tcp-chapter"></span><h1>TCPStatsClient<a class="headerlink" href="#tcpstatsclient" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">statsd</span> <span class="o">=</span> <span class="n">TCPStatsClient</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;1.2.3.4&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8126</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="reference.html#TCPStatsClient" title="TCPStatsClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">TCPStatsClient</span></code></a> class has a very similar interface to
+<a class="reference internal" href="reference.html#StatsClient" title="StatsClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">StatsClient</span></code></a>, but internally it uses TCP connections instead of UDP.
+These are the main differences when using <code class="docutils literal notranslate"><span class="pre">TCPStatsClient</span></code> compared to
+<code class="docutils literal notranslate"><span class="pre">StatsClient</span></code>:</p>
+<ul class="simple">
+<li><p>The constructor supports a <code class="docutils literal notranslate"><span class="pre">timeout</span></code> parameter to set a timeout on all
+socket actions.</p></li>
+<li><p><a class="reference internal" href="reference.html#TCPStatsClient.connect" title="TCPStatsClient.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">connect()</span></code></a> and all methods that send
+data can potentially raise socket exceptions.</p></li>
+<li><p><strong>It is not thread-safe</strong>, so it is recommended to not share it across
+threads unless a lot of attention is paid to make sure that no two threads
+ever use it at once.</p></li>
+</ul>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pipeline.html"
+                        title="previous chapter">Pipelines</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="unix_socket.html"
+                        title="next chapter">UnixSocketStatsClient</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tcp.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="unix_socket.html" title="UnixSocketStatsClient"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pipeline.html" title="Pipelines"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Python StatsD 3.3.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">TCPStatsClient</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015, James Socol.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+    </div>
+  </body>
+</html>
