@@ -5,9 +5,9 @@ A Python statsd client
 statsd_ is a friendly front-end to Graphite_. This is a Python client
 for the statsd daemon.
 
-.. image:: https://travis-ci.org/jsocol/pystatsd.png?branch=master
-   :target: https://travis-ci.org/jsocol/pystatsd
-   :alt: Travis-CI build status
+.. image:: https://dl.circleci.com/status-badge/img/gh/matthewhughes934/pystatsd/tree/master.svg?style=svg
+   :target: https://dl.circleci.com/status-badge/redirect/gh/matthewhughes934/pystatsd/tree/master
+   :alt: CircleCI build status
 
 .. image:: https://img.shields.io/pypi/v/statsd.svg
    :target: https://pypi.python.org/pypi/statsd/
@@ -21,10 +21,10 @@ for the statsd daemon.
    :target: https://pypi.python.org/pypi/statsd/
    :alt: Wheel Status
 
-:Code:          https://github.com/jsocol/pystatsd
+:Code:          https://github.com/matthewhughes934/pystatsd
 :License:       MIT; see LICENSE file
 :Issues:        https://github.com/jsocol/pystatsd/issues
-:Documentation: https://statsd.readthedocs.io/
+:Documentation: https://matthewhughes934.github.io/pystatsd/
 
 Quickly, to use:
 
@@ -55,11 +55,11 @@ You can install from PyPI::
 
 Or GitHub::
 
-    $ pip install -e git+https://github.com/jsocol/pystatsd#egg=statsd
+    $ pip install -e https://github.com/matthewhughes934/pystatsd#egg=statsd
 
 Or from source::
 
-    $ git clone https://github.com/jsocol/pystatsd
+    $ git clone https://github.com/matthewhughes934/pystatsd
     $ cd pystatsd
     $ python setup.py install
 
