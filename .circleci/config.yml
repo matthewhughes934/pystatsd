@@ -20,7 +20,7 @@ commands:
           key: pip-cache-v0-{{ checksum "pip-cache-key.txt" }}
       - run:
           name: Install requirements
-          command: pip install --requirement requirements-dev.txt --cache-dir .cache/pip
+          command: pip install --requirement requirements-dev.txt --cache-dir .cache/pip .
       - save_cache:
           key: pip-cache-v0-{{ checksum "pip-cache-key.txt" }}
           paths: .cache/pip
