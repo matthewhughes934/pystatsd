@@ -9,22 +9,26 @@ Welcome to Python StatsD's documentation!
 statsd_ is a friendly front-end to Graphite_. This is a Python client
 for the statsd daemon.
 
-.. image:: https://travis-ci.org/jsocol/pystatsd.png?branch=master
-   :target: https://travis-ci.org/jsocol/pystatsd
-   :alt: Travis-CI build status
+.. image:: https://dl.circleci.com/status-badge/img/gh/matthewhughes934/pystatsd/tree/master.svg?style=svg
+   :target: https://dl.circleci.com/status-badge/redirect/gh/matthewhughes934/pystatsd/tree/master
+   :alt: CircleCI build status
 
-.. image:: https://pypip.in/v/statsd/badge.png
+.. image:: https://img.shields.io/pypi/v/statsd.svg
    :target: https://pypi.python.org/pypi/statsd/
    :alt: Latest release
 
-.. image:: https://pypip.in/d/statsd/badge.png
+.. image:: https://img.shields.io/pypi/pyversions/statsd.svg
    :target: https://pypi.python.org/pypi/statsd/
-   :alt: Downloads
+   :alt: Supported Python versions
 
-:Code:          https://github.com/jsocol/pystatsd
+.. image:: https://img.shields.io/pypi/wheel/statsd.svg
+   :target: https://pypi.python.org/pypi/statsd/
+   :alt: Wheel Status
+
+:Code:          https://github.com/matthewhughes934/pystatsd
 :License:       MIT; see LICENSE file
 :Issues:        https://github.com/jsocol/pystatsd/issues
-:Documentation: https://statsd.readthedocs.io/
+:Documentation: https://matthewhughes934.github.io/pystatsd/
 
 Quickly, to use:
 
@@ -59,13 +63,13 @@ Or GitHub:
 
 .. code-block:: bash
 
-    $ pip install -e git+https://github.com/jsocol/pystatsd#egg=statsd
+    $ pip install -e git+https://github.com/matthewhughes934/pystatsd#egg=statsd
 
 Or from source:
 
 .. code-block:: bash
 
-    $ git clone https://github.com/jsocol/pystatsd
+    $ git clone https://github.com/matthewhughes934/pystatsd
     $ cd statsd
     $ python setup.py install
 
