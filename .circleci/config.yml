@@ -1,28 +1,16 @@
 version: 2.1
 
-attach_virtualenv: &attach_virtualenv
-  attach_workspace:
-      at: /tmp/workspace
-
-load_virtualenv: &load_virtualenv
-  # Load a virtualenv from the 'build' job
-  run:
-    name: Load virtualenv
-    command: |
-        cp --recursive /tmp/workspace/venvs .
-        venv_path="$PWD/venvs/$(python --version | tr --delete " ")"
-        echo "export PATH=$venv_path/bin:\$PATH" >> $BASH_ENV
-        echo "export VIRTUAL_ENV=$venv_path" >> $BASH_ENV
-
-jobs:
-  build:
+commands:
+  install-deps:
     parameters:
-      python-version:
-        type: string
-    docker:
-      - image: cimg/python:<< parameters.python-version>>
+      before-install:
+        type: steps
+        default: []
+      after-install:
+        type: steps
+        default: []
     steps:
-      - checkout
+      - steps: << parameters.before-install >>
       - run:
           name: Build cache-key
           command: |
@@ -31,26 +19,26 @@ jobs:
       - restore_cache:
           key: pip-cache-v0-{{ checksum "pip-cache-key.txt" }}
       - run:
-          # build a virtualenv that can be copied across other jobs
-          name: Setup Virtual env
-          command: |
-            mkdir ./venvs/
-            # each Python version has its own venv
-            venv_path="$PWD/venvs/$(python --version | tr --delete " ")"
-            python -m venv "$venv_path"
-            echo "export PATH=$venv_path/bin:\$PATH" >> $BASH_ENV
-            echo "export VIRTUAL_ENV=$venv_path" >> $BASH_ENV
-      - run:
           name: Install requirements
           command: pip install --requirement requirements-dev.txt --cache-dir .cache/pip
       - save_cache:
           key: pip-cache-v0-{{ checksum "pip-cache-key.txt" }}
           paths: .cache/pip
-      - persist_to_workspace:
-          root: .
-          paths:
-            - venvs
-  test:
+      - steps: << parameters.after-install >>
+
+  load_venv:
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Load virtualenv
+          command: |
+            cp --recursive /tmp/workspace/.venv .
+            echo "export PATH=$PWD/.venv/bin:\$PATH" >> $BASH_ENV
+            echo "export VIRTUAL_ENV=$PWD/.venv" >> $BASH_ENV
+
+jobs:
+  build-and-test:
     parameters:
       python-version:
         type: string
@@ -58,8 +46,35 @@ jobs:
       - image: cimg/python:<< parameters.python-version>>
     steps:
       - checkout
-      - *attach_virtualenv
-      - *load_virtualenv
+      - install-deps
+      - run: pytest
+
+  # gets its own job so we can pass the created virtualenv to other jobs
+  build-python-310:
+    docker:
+      - image: cimg/python:3.10
+    steps:
+      - checkout
+      - install-deps:
+          before-install:
+            - run:
+                name: Setup Virtual Env
+                command: |
+                  python -m venv .venv
+                  echo "export PATH=$PWD/.venv/bin:\$PATH" >> $BASH_ENV
+                  echo "export VIRTUAL_ENV=$PWD/.venv" >> $BASH_ENV
+          after-install:
+            - persist_to_workspace:
+                root: .
+                paths:
+                  - .venv
+
+  test-python-310:
+    docker:
+      - image: cimg/python:3.10
+    steps:
+      - checkout
+      - load_venv
       - run: pytest
 
   lint:
@@ -67,8 +82,7 @@ jobs:
       - image: cimg/python:3.10
     steps:
       - checkout
-      - *attach_virtualenv
-      - *load_virtualenv
+      - load_venv
       - run: flake8 statsd tests
       - run: black --check --diff statsd tests
       - run: isort --check-only --diff statsd tests
@@ -79,8 +93,7 @@ jobs:
       - image: cimg/python:3.10
     steps:
       - checkout
-      - *attach_virtualenv
-      - *load_virtualenv
+      - load_venv
       - run:
           name: Build docs
           working_directory: ./docs
@@ -124,22 +137,20 @@ jobs:
 workflows:
   test-pythons:
     jobs:
-      - build:
+      - build-and-test:
           matrix:
             parameters:
-              python-version: ["3.7", "3.8", "3.9", "3.10"]
-      - test:
-          matrix:
-            parameters:
-              python-version: ["3.7", "3.8", "3.9", "3.10"]
+              python-version: ["3.7", "3.8", "3.9"]
+      - build-python-310
+      - test-python-310:
           requires:
-            - build
+            - build-python-310
       - lint:
           requires:
-            - build
+            - build-python-310
       - build-docs:
           requires:
-            - build
+            - build-python-310
       - deploy-gh-pages:
           requires:
             - build-docs
