@@ -15,6 +15,7 @@ setup(
     package_data={'': ['README.rst'], "statsd": ["py.typed"]},
     test_suite='nose.collector',
     python_requires='>=3.7',
+    install_requires='importlib-metadata;python_version<"3.8"',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
