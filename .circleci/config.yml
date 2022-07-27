@@ -121,13 +121,13 @@ jobs:
             git rm -r -- ':(exclude).nojekyll'
             # and replace with the new ones
             (shopt -s dotglob; cp --recursive /tmp/workspace/html/* .)
+            git add .
 
-            if ! git diff --quiet
+            if ! git diff --cached --quiet
             then
                 git config user.name "CircleCI"
                 git config user.email "circleci@site.invalid"
 
-                git add .
                 git commit --message "Deploy docs for: $CIRCLE_SHA1"
                 git push origin HEAD
             else
