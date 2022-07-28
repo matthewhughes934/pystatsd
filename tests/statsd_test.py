@@ -35,6 +35,8 @@ def _udp_client(prefix=None, addr=None, port=None, ipv6=False):
     if not port:
         port = ADDR[1]
     sc = StatsClient(host=addr, port=port, prefix=prefix, ipv6=ipv6)
+    # close socket to avoid a ResourceWarning
+    sc.close()
     sc._sock = mock.Mock()
     return sc
 
