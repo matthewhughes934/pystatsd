@@ -42,12 +42,10 @@ class UDPServer(threading.Thread):
     def __init__(
         self,
         sock: socket.socket,
-        host: str,
-        port: int,
+        addr: tuple[str, int],
     ) -> None:
         self._sock = sock
-        self._host = host
-        self._port = port
+        self._addr = addr
         self.received: list[str] = []
         self.listening = False
 
@@ -55,7 +53,7 @@ class UDPServer(threading.Thread):
 
     def run(self) -> None:
         with self._sock as sock:
-            sock.bind((self._host, self._port))
+            sock.bind(self._addr)
             self.listening = True
 
             while True:
@@ -101,7 +99,7 @@ class StreamServer(threading.Thread):
 def test_incr_udp(port):
     host = "127.0.0.1"
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    server = UDPServer(server_socket, host, port)
+    server = UDPServer(server_socket, (host, port))
     server.start()
 
     client = StatsClient(host=host, port=port)
