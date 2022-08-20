@@ -140,3 +140,41 @@ def test_incr(client_server_pair):
     server.join()
 
     assert server.received == ["foo:1|c", "foo:10|c", "foo:10|c|@0.5"]
+
+
+@mock.patch.object(random, "random", lambda: -1)
+def test_decr(client_server_pair):
+    client, server = client_server_pair
+    server.start()
+
+    while not server.listening:
+        time.sleep(0.01)
+
+    with terminating_client(client):
+        client.decr("foo")
+        client.decr("foo", 10)
+        client.decr("foo", 10, rate=0.5)
+
+    client.close()
+    server.join()
+
+    assert server.received == ["foo:-1|c", "foo:-10|c", "foo:-10|c|@0.5"]
+
+
+@mock.patch.object(random, "random", lambda: -1)
+def test_guage(client_server_pair):
+    client, server = client_server_pair
+    server.start()
+
+    while not server.listening:
+        time.sleep(0.01)
+
+    with terminating_client(client):
+        client.gauge("foo", 30)
+        client.gauge("foo", 1.2)
+        client.gauge("foo", 70, rate=0.5)
+
+    client.close()
+    server.join()
+
+    assert server.received == ["foo:30|g", "foo:1.2|g", "foo:70|g|@0.5"]
