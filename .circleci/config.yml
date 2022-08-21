@@ -83,10 +83,17 @@ jobs:
     steps:
       - checkout
       - load_venv
-      - run: flake8 statsd tests
-      - run: black --check --diff statsd tests
-      - run: isort --check-only --diff statsd tests
-      - run: mypy --show-error-codes statsd tests
+      - run:
+          command: |
+            cp .pre-commit-config.yaml pre-commit-cache-key.txt
+            python --version --version >> pre-commit-cache-key.txt
+      - restore_cache:
+          key: v1-pc-cache-{{ checksum "pre-commit-cache-key.txt" }}
+      - run: pre-commit run --all-files --show-diff-on-failure
+      - save_cache:
+          key: v1-pc-cache-{{ checksum "pre-commit-cache-key.txt" }}
+          paths:
+            - ~/.cache/pre-commit
 
   build-docs:
     docker:
