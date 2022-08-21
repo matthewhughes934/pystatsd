@@ -42,12 +42,10 @@ class UDPServer(threading.Thread):
     def __init__(
         self,
         sock: socket.socket,
-        host: str,
-        port: int,
+        addr: tuple[str, int],
     ) -> None:
         self._sock = sock
-        self._host = host
-        self._port = port
+        self._addr = addr
         self.received: list[str] = []
         self.listening = False
 
@@ -55,7 +53,7 @@ class UDPServer(threading.Thread):
 
     def run(self) -> None:
         with self._sock as sock:
-            sock.bind((self._host, self._port))
+            sock.bind(self._addr)
             self.listening = True
 
             while True:
@@ -97,60 +95,38 @@ class StreamServer(threading.Thread):
                             self.received.append(line)
 
 
-@mock.patch.object(random, "random", lambda: -1)
-def test_incr_udp(port):
-    host = "127.0.0.1"
+@pytest.fixture
+def udp_pair(port):
+    host = "localhost"
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    server = UDPServer(server_socket, host, port)
-    server.start()
-
-    client = StatsClient(host=host, port=port)
-
-    while not server.listening:
-        time.sleep(0.01)
-
-    with terminating_client(client):
-        client.incr("foo")
-        client.incr("foo", 10)
-        client.incr("foo", 10, rate=0.5)
-
-    client.close()
-    server.join()
-
-    assert server.received == ["foo:1|c", "foo:10|c", "foo:10|c|@0.5"]
+    return (StatsClient(host=host, port=port), UDPServer(server_socket, (host, port)))
 
 
-@mock.patch.object(random, "random", lambda: -1)
-def test_incr_tcp(port):
-    host = "127.0.0.1"
-    server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server = StreamServer(server_sock, (host, port))
-    server.start()
-
-    client = TCPStatsClient(host, port)
-
-    while not server.listening:
-        time.sleep(0.01)
-
-    with terminating_client(client):
-        client.incr("foo")
-        client.incr("foo", 10)
-        client.incr("foo", 10, rate=0.5)
-
-    client.close()
-    server.join()
-
-    assert server.received == ["foo:1|c", "foo:10|c", "foo:10|c|@0.5"]
+@pytest.fixture
+def tcp_pair(port):
+    host = "localhost"
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    return (TCPStatsClient(host, port), StreamServer(server_socket, (host, port)))
 
 
-@mock.patch.object(random, "random", lambda: -1)
-def test_incr_unix(tmpdir):
+@pytest.fixture
+def unix_pair(tmpdir):
+    if not hasattr(socket, "AF_UNIX"):
+        pytest.skip("Skipping: Unix sockets not supported")
     path = str(tmpdir / "test_socket")
-    server_sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    server = StreamServer(server_sock, path)
-    server.start()
+    server_socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    return (UnixSocketStatsClient(path), StreamServer(server_socket, path))
 
-    client = UnixSocketStatsClient(path)
+
+@pytest.fixture(params=("udp_pair", "tcp_pair", "unix_pair"))
+def client_server_pair(request):
+    return request.getfixturevalue(request.param)
+
+
+@mock.patch.object(random, "random", lambda: -1)
+def test_incr(client_server_pair):
+    client, server = client_server_pair
+    server.start()
 
     while not server.listening:
         time.sleep(0.01)
@@ -158,9 +134,49 @@ def test_incr_unix(tmpdir):
     with terminating_client(client):
         client.incr("foo")
         client.incr("foo", 10)
+        client.incr("foo", 1.2)
         client.incr("foo", 10, rate=0.5)
 
     client.close()
     server.join()
 
-    assert server.received == ["foo:1|c", "foo:10|c", "foo:10|c|@0.5"]
+    assert server.received == ["foo:1|c", "foo:10|c", "foo:1.2|c", "foo:10|c|@0.5"]
+
+
+@mock.patch.object(random, "random", lambda: -1)
+def test_decr(client_server_pair):
+    client, server = client_server_pair
+    server.start()
+
+    while not server.listening:
+        time.sleep(0.01)
+
+    with terminating_client(client):
+        client.decr("foo")
+        client.decr("foo", 10)
+        client.decr("foo", 1.2)
+        client.decr("foo", 10, rate=0.5)
+
+    client.close()
+    server.join()
+
+    assert server.received == ["foo:-1|c", "foo:-10|c", "foo:-1.2|c", "foo:-10|c|@0.5"]
+
+
+@mock.patch.object(random, "random", lambda: -1)
+def test_guage(client_server_pair):
+    client, server = client_server_pair
+    server.start()
+
+    while not server.listening:
+        time.sleep(0.01)
+
+    with terminating_client(client):
+        client.gauge("foo", 30)
+        client.gauge("foo", 1.2)
+        client.gauge("foo", 70, rate=0.5)
+
+    client.close()
+    server.join()
+
+    assert server.received == ["foo:30|g", "foo:1.2|g", "foo:70|g|@0.5"]
