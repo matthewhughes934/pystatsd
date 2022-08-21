@@ -1,88 +1,24 @@
 version: 2.1
+orbs:
+  python: circleci/python@2.0.3
 
-commands:
-  install-deps:
-    parameters:
-      before-install:
-        type: steps
-        default: []
-      after-install:
-        type: steps
-        default: []
-    steps:
-      - steps: << parameters.before-install >>
-      - run:
-          name: Build cache-key
-          command: |
-            cp requirements-dev.txt pip-cache-key.txt
-            python --version --version >> pip-cache-key.txt
-      - restore_cache:
-          key: pip-cache-v0-{{ checksum "pip-cache-key.txt" }}
-      - run:
-          name: Install requirements
-          command: pip install --requirement requirements-dev.txt --cache-dir .cache/pip .
-      - save_cache:
-          key: pip-cache-v0-{{ checksum "pip-cache-key.txt" }}
-          paths: .cache/pip
-      - steps: << parameters.after-install >>
-
-  load_venv:
-    steps:
-      - attach_workspace:
-          at: /tmp/workspace
-      - run:
-          name: Load virtualenv
-          command: |
-            cp --recursive /tmp/workspace/.venv .
-            echo "export PATH=$PWD/.venv/bin:\$PATH" >> $BASH_ENV
-            echo "export VIRTUAL_ENV=$PWD/.venv" >> $BASH_ENV
+definitions:
+  # Make sure we install the current project
+  # otherwise it looks like CircleCI wants to rely on using PYTHONPATH
+  # to find packages. But this errors due to our use of
+  # 'importlib.metadata'
+  install-args: &install-args
+      pip-dependency-file: requirements-dev.txt
+      pkg-manager: pip
+      args: "."
 
 jobs:
-  build-and-test:
-    parameters:
-      python-version:
-        type: string
-    docker:
-      - image: cimg/python:<< parameters.python-version>>
-    steps:
-      - checkout
-      - install-deps
-      - run: pytest
-
-  # gets its own job so we can pass the created virtualenv to other jobs
-  build-python-310:
-    docker:
-      - image: cimg/python:3.10
-    steps:
-      - checkout
-      - install-deps:
-          before-install:
-            - run:
-                name: Setup Virtual Env
-                command: |
-                  python -m venv .venv
-                  echo "export PATH=$PWD/.venv/bin:\$PATH" >> $BASH_ENV
-                  echo "export VIRTUAL_ENV=$PWD/.venv" >> $BASH_ENV
-          after-install:
-            - persist_to_workspace:
-                root: .
-                paths:
-                  - .venv
-
-  test-python-310:
-    docker:
-      - image: cimg/python:3.10
-    steps:
-      - checkout
-      - load_venv
-      - run: pytest
-
   lint:
     docker:
       - image: cimg/python:3.10
     steps:
       - checkout
-      - load_venv
+      - python/install-packages: *install-args
       - run:
           command: |
             cp .pre-commit-config.yaml pre-commit-cache-key.txt
@@ -100,7 +36,7 @@ jobs:
       - image: cimg/python:3.10
     steps:
       - checkout
-      - load_venv
+      - python/install-packages: *install-args
       - run:
           name: Build docs
           working_directory: ./docs
@@ -142,22 +78,15 @@ jobs:
             fi
 
 workflows:
-  test-pythons:
+  test-lint-deploy:
     jobs:
-      - build-and-test:
+      - python/test:
+          <<: *install-args
           matrix:
             parameters:
-              python-version: ["3.7", "3.8", "3.9"]
-      - build-python-310
-      - test-python-310:
-          requires:
-            - build-python-310
-      - lint:
-          requires:
-            - build-python-310
-      - build-docs:
-          requires:
-            - build-python-310
+              version: ["3.7", "3.8", "3.9", "3.10"]
+      - lint
+      - build-docs
       - deploy-gh-pages:
           requires:
             - build-docs
@@ -165,4 +94,3 @@ workflows:
             branches:
               only:
                 - master
-
