@@ -40,11 +40,11 @@ class StatsClientBase:
             delta = delta.total_seconds() * 1000.0
         self._send_stat(stat, "%0.6f|ms" % delta, rate)
 
-    def incr(self, stat: str, count: int = 1, rate: float = 1) -> None:
+    def incr(self, stat: str, count: float = 1, rate: float = 1) -> None:
         """Increment a stat by `count`."""
         self._send_stat(stat, "%s|c" % count, rate)
 
-    def decr(self, stat: str, count: int = 1, rate: float = 1) -> None:
+    def decr(self, stat: str, count: float = 1, rate: float = 1) -> None:
         """Decrement a stat by `count`."""
         self.incr(stat, -count, rate)
 

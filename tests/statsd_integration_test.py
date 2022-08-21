@@ -134,12 +134,13 @@ def test_incr(client_server_pair):
     with terminating_client(client):
         client.incr("foo")
         client.incr("foo", 10)
+        client.incr("foo", 1.2)
         client.incr("foo", 10, rate=0.5)
 
     client.close()
     server.join()
 
-    assert server.received == ["foo:1|c", "foo:10|c", "foo:10|c|@0.5"]
+    assert server.received == ["foo:1|c", "foo:10|c", "foo:1.2|c", "foo:10|c|@0.5"]
 
 
 @mock.patch.object(random, "random", lambda: -1)
@@ -153,12 +154,13 @@ def test_decr(client_server_pair):
     with terminating_client(client):
         client.decr("foo")
         client.decr("foo", 10)
+        client.decr("foo", 1.2)
         client.decr("foo", 10, rate=0.5)
 
     client.close()
     server.join()
 
-    assert server.received == ["foo:-1|c", "foo:-10|c", "foo:-10|c|@0.5"]
+    assert server.received == ["foo:-1|c", "foo:-10|c", "foo:-1.2|c", "foo:-10|c|@0.5"]
 
 
 @mock.patch.object(random, "random", lambda: -1)
