@@ -3,14 +3,11 @@ orbs:
   python: circleci/python@2.0.3
 
 definitions:
-  # Make sure we install the current project
-  # otherwise it looks like CircleCI wants to rely on using PYTHONPATH
-  # to find packages. But this errors due to our use of
-  # 'importlib.metadata'
   install-args: &install-args
-      pip-dependency-file: requirements-dev.txt
-      pkg-manager: pip
-      args: "."
+      pkg-manager: pip-dist
+      # use setup.cfg for caching, since that's where deps are
+      pip-dependency-file: setup.cfg
+      args: --editable .[dev]
 
 jobs:
   lint:

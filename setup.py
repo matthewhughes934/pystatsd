@@ -15,6 +15,15 @@ setup(
     test_suite="nose.collector",
     python_requires=">=3.7",
     install_requires='importlib-metadata;python_version<"3.8"',
+    extras_require={
+        "dev": [
+            "pytest>=6.2.5",
+            "mypy<=1.0.0",
+            "pre-commit>=2.2.0,<3",
+            "sphinx",
+            "sphinx_rtd_theme",
+        ],
+    },
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
